@@ -24,6 +24,7 @@ from .dialogs.batch_rename_dialog import show_batch_rename_dialog
 from .dialogs.properties_dialog import show_properties_dialog
 from .dialogs.confirm_dialog import show_confirm_dialog, show_new_folder_dialog
 from .dialogs.metadata_dialog import show_metadata_dialog
+from .dialogs.remix_dialog import show_remix_dialog
 from .viewers.media_viewer import MediaViewer
 from .services.recursive_loader import RecursiveLoader
 
@@ -142,6 +143,7 @@ class UltraFilesWindow(Adw.ApplicationWindow):
             ("new-folder", self._on_new_folder, None),
             ("toggle-terminal", self._on_toggle_terminal, None),
             ("edit-metadata", self._on_edit_metadata, None),
+            ("remix-meme", self._on_remix_meme, None),
             ("add-favorite", self._on_add_favorite, None),
             ("remove-favorite", self._on_remove_favorite, None),
             ("toggle-tag", self._on_toggle_tag, GLib.VariantType.new("s")),
@@ -503,6 +505,13 @@ class UltraFilesWindow(Adw.ApplicationWindow):
             return [item.path for item in items if item.path]
         return []
 
+    def _get_selected_items(self) -> list:
+        """Get list of selected FileItems"""
+        current_view = self._view_stack.get_visible_child()
+        if hasattr(current_view, "get_selected_items"):
+            return current_view.get_selected_items()
+        return []
+
     def _on_operation_complete(self, service, message: str, success: bool):
         """Handle file operation completion"""
         self._show_toast(message)
@@ -643,11 +652,17 @@ class UltraFilesWindow(Adw.ApplicationWindow):
             edit_section.append("Copy Path", "win.copy-path")
             menu.append_section(None, edit_section)
 
-            # Metadata (Audio only)
-            if file_item.is_audio():
+            # Meme data (media)
+            if file_item.is_media():
                 meta_section = Gio.Menu()
-                meta_section.append("Edit Metadata...", "win.edit-metadata")
+                meta_section.append("Edit Meme Data...", "win.edit-metadata")
                 menu.append_section(None, meta_section)
+
+            # Meme remix (Video only)
+            if file_item.is_video():
+                remix_section = Gio.Menu()
+                remix_section.append("Remix Meme...", "win.remix-meme")
+                menu.append_section(None, remix_section)
 
             # Favorites
             fav_section = Gio.Menu()
@@ -1134,3 +1149,20 @@ class UltraFilesWindow(Adw.ApplicationWindow):
                 self._show_toast("Failed to save metadata")
                 
         show_metadata_dialog(self, selected[0], on_save)
+
+    def _on_remix_meme(self, action, param):
+        items = self._get_selected_items()
+        if len(items) != 1:
+            self._show_toast("Select exactly one video")
+            return
+
+        item = items[0]
+        if not item.is_video():
+            self._show_toast("Select a video file")
+            return
+
+        def on_complete(output_path):
+            if output_path:
+                self._show_toast("Remix export complete")
+
+        show_remix_dialog(self, item, on_complete)
