@@ -112,3 +112,26 @@ class TagsService(GObject.Object):
                     matches.append(uri)
                     break
         return matches
+
+    def set_tags_for_file(self, uri: str, tags: List[str]):
+        """Replace tags for a file URI"""
+        cleaned = []
+        seen = set()
+        for tag in tags or []:
+            name = (tag or "").strip()
+            if not name or name in seen:
+                continue
+            cleaned.append(name)
+            seen.add(name)
+
+        current = self._file_tags.get(uri, [])
+        if current == cleaned:
+            return
+
+        if cleaned:
+            self._file_tags[uri] = cleaned
+        elif uri in self._file_tags:
+            del self._file_tags[uri]
+
+        self._save()
+        self.emit("tags-changed")

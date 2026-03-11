@@ -178,6 +178,7 @@ class UltraFilesWindow(Adw.ApplicationWindow):
         # Create sidebar
         self._sidebar = Sidebar()
         self._sidebar.connect("place-selected", self._on_place_selected)
+        self._sidebar.connect("theme-selected", self._on_theme_selected)
 
         sidebar_page = Adw.NavigationPage.new(self._sidebar, "Places")
         self._split_view.set_sidebar(sidebar_page)
@@ -863,6 +864,9 @@ class UltraFilesWindow(Adw.ApplicationWindow):
         tag = param.get_string()
         if not tag: tag = None
         self._grid_view.set_filter_by_tag(tag)
+
+    def _on_theme_selected(self, sidebar, theme: str):
+        self._grid_view.set_filter_by_tag(theme)
 
     def _on_view_list(self, action, param):
         self._list_btn.set_active(True)

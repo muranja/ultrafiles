@@ -250,6 +250,7 @@ class MediaViewer(Gtk.Box):
         self._media_file = mf
         self._video_picture.set_paintable(mf)
         self._video_controls.set_media_stream(mf)
+        mf.set_loop(True)
         mf.set_muted(False)
         mf.play()
         self._stack.set_visible_child_name("video")
@@ -381,4 +382,3 @@ class MediaViewer(Gtk.Box):
             self.emit("close-viewer")
             return True
         return False
-

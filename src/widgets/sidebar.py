@@ -17,6 +17,7 @@ class Sidebar(Gtk.Box):
 
     __gsignals__ = {
         "place-selected": (GObject.SignalFlags.RUN_FIRST, None, (str,)),
+        "theme-selected": (GObject.SignalFlags.RUN_FIRST, None, (str,)),
     }
 
     def __init__(self):
@@ -64,6 +65,10 @@ class Sidebar(Gtk.Box):
 
         # Favorites (Starred) section
         self._favorites_listbox = self._add_section(content_box, "Favorites", [])
+
+        # Themes section
+        themes = self._get_themes()
+        self._add_section(content_box, "Meme Themes", themes)
         
         # Devices section (if any)
         devices = self._get_devices()
@@ -189,6 +194,14 @@ class Sidebar(Gtk.Box):
 
         return places
 
+    def _get_themes(self) -> list:
+        """Get default meme themes"""
+        themes = ["Funny", "Sad", "Reaction", "Sound Effect", "Green Screen", "B-Roll"]
+        return [
+            {"name": t, "path": f"theme://{t}", "icon": "tag-symbolic"}
+            for t in themes
+        ]
+
     def _get_bookmarks(self) -> list:
         """Get user bookmarks"""
         places = []
@@ -208,9 +221,14 @@ class Sidebar(Gtk.Box):
         return places
 
     def _on_row_activated(self, listbox, row):
-        """Handle place selection"""
+        """Handle place or theme selection"""
         if hasattr(row, "place_path"):
-            self.emit("place-selected", row.place_path)
+            path = row.place_path
+            if path.startswith("theme://"):
+                theme_name = path.replace("theme://", "", 1)
+                self.emit("theme-selected", theme_name)
+            else:
+                self.emit("place-selected", path)
 
     def add_bookmark(self, path: str):
         """Add a bookmark"""
