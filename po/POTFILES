@@ -1,0 +1,4 @@
+data/com.ultrafiles.UltraFiles.desktop.in
+data/com.ultrafiles.UltraFiles.metainfo.xml.in
+src/window.py
+src/application.py

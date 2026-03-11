@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="ultrafiles">
+  <schema id="com.ultrafiles.UltraFiles" path="/com/ultrafiles/UltraFiles/">
+    
+    <!-- View Settings -->
+    <key name="default-view" type="s">
+      <default>'list'</default>
+      <summary>Default view mode</summary>
+      <description>The default view mode for file listings (list, grid, columns)</description>
+    </key>
+    
+    <key name="show-hidden-files" type="b">
+      <default>false</default>
+      <summary>Show hidden files</summary>
+      <description>Whether to show hidden files (files starting with a dot)</description>
+    </key>
+    
+    <key name="sort-by" type="s">
+      <default>'name'</default>
+      <summary>Sort files by</summary>
+      <description>The field to sort files by (name, size, modified, type)</description>
+    </key>
+    
+    <key name="sort-ascending" type="b">
+      <default>true</default>
+      <summary>Sort ascending</summary>
+      <description>Whether to sort in ascending order</description>
+    </key>
+    
+    <key name="folders-first" type="b">
+      <default>true</default>
+      <summary>Show folders before files</summary>
+      <description>Whether to always show folders before files</description>
+    </key>
+    
+    <!-- Window State -->
+    <key name="window-width" type="i">
+      <default>1200</default>
+      <summary>Window width</summary>
+    </key>
+    
+    <key name="window-height" type="i">
+      <default>800</default>
+      <summary>Window height</summary>
+    </key>
+    
+    <key name="window-maximized" type="b">
+      <default>false</default>
+      <summary>Window maximized state</summary>
+    </key>
+    
+    <key name="sidebar-width" type="i">
+      <default>240</default>
+      <summary>Sidebar width</summary>
+    </key>
+    
+    <!-- Thumbnail Settings -->
+    <key name="show-thumbnails" type="b">
+      <default>true</default>
+      <summary>Show thumbnails</summary>
+      <description>Whether to show thumbnails for images and videos</description>
+    </key>
+    
+    <key name="video-preview-on-hover" type="b">
+      <default>true</default>
+      <summary>Video preview on hover</summary>
+      <description>Whether to play video preview when hovering over video files</description>
+    </key>
+    
+    <!-- Bookmarks -->
+    <key name="bookmarks" type="as">
+      <default>[]</default>
+      <summary>Bookmark paths</summary>
+      <description>List of bookmarked folder paths</description>
+    </key>
+    
+  </schema>
+</schemalist>

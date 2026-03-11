@@ -1,0 +1,544 @@
+/* UltraFiles Custom Styles - Dark Theme with Light Accents */
+
+/* Dark base colors */
+@define-color bg-color #0a0a0a;
+@define-color surface-color #121212;
+@define-color card-color #1a1a1a;
+@define-color border-color #2a2a2a;
+@define-color text-color #f0f0f0;
+@define-color dim-text-color #808080;
+
+/* Accent color - Cyan for a modern look */
+@define-color accent-color #00d4ff;
+@define-color accent-bg-color rgba(0, 212, 255, 0.15);
+@define-color accent-hover-bg-color rgba(0, 212, 255, 0.25);
+@define-color accent-text-color #00d4ff;
+
+/* Secondary accent - Purple for variety */
+@define-color secondary-accent-color #a855f7;
+@define-color secondary-accent-bg-color rgba(168, 85, 247, 0.15);
+
+/* Success color */
+@define-color success-color #10b981;
+@define-color success-bg-color rgba(16, 185, 129, 0.15);
+
+/* Warning color */
+@define-color warning-color #f59e0b;
+@define-color warning-bg-color rgba(245, 158, 11, 0.15);
+
+/* Error color */
+@define-color error-color #ef4444;
+@define-color error-bg-color rgba(239, 68, 68, 0.15);
+
+/* Window styling */
+window {
+    background-color: @bg-color;
+    color: @text-color;
+}
+
+/* Header bar styling */
+headerbar {
+    background-color: @surface-color;
+    border-bottom: 1px solid @border-color;
+}
+
+headerbar button {
+    background-color: transparent;
+    color: @text-color;
+}
+
+headerbar button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+headerbar button:checked {
+    background-color: @accent-bg-color;
+    color: @accent-text-color;
+}
+
+/* Sidebar navigation */
+places-sidebar {
+    background-color: @surface-color;
+}
+
+.places-sidebar row {
+    border-radius: 8px;
+    margin: 3px 8px;
+    padding: 10px 14px;
+    transition: background-color 150ms ease;
+    background-color: transparent;
+}
+
+.places-sidebar row:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.places-sidebar row:selected {
+    background-color: @accent-bg-color;
+    color: @accent-text-color;
+}
+
+.places-sidebar row:selected:hover {
+    background-color: @accent-hover-bg-color;
+}
+
+.places-sidebar row image {
+    -gtk-icon-shadow: none;
+    opacity: 0.9;
+}
+
+/* Section headers in sidebar */
+.places-sidebar .section-header {
+    font-weight: 600;
+    font-size: 0.75em;
+    color: @dim-text-color;
+    padding: 16px 18px 8px 18px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+/* Navigation split view */
+navigation-split-view {
+    background-color: @bg-color;
+}
+
+/* File list styling */
+.file-list-view {
+    background-color: @bg-color;
+}
+
+.file-list-view row {
+    padding: 8px 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    transition: background-color 150ms ease;
+}
+
+.file-list-view row:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.file-list-view row:selected {
+    background-color: @accent-bg-color;
+    color: @accent-text-color;
+}
+
+.file-list-view row image {
+    /* -gtk-icon-filter: none; */
+}
+
+/* Grid view items */
+.file-grid-view {
+    background-color: @bg-color;
+}
+
+.file-grid-item {
+    padding: 14px;
+    border-radius: 12px;
+    transition: background-color 150ms ease;
+    background-color: transparent;
+}
+
+.file-grid-item:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    transform: translateY(-2px);
+}
+
+.file-grid-item:selected {
+    background-color: @accent-bg-color;
+    color: @accent-text-color;
+}
+
+.file-grid-item .thumbnail {
+    border-radius: 10px;
+    background-color: @card-color;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.file-grid-item .thumbnail picture {
+    border-radius: 10px;
+}
+
+.file-grid-item .filename {
+    font-size: 0.9em;
+    margin-top: 10px;
+    color: @text-color;
+    text-shadow: none;
+}
+
+/* Path bar breadcrumbs */
+.path-bar {
+    background-color: rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+    padding: 6px 8px;
+    border: 1px solid transparent;
+    transition: border-color 150ms ease;
+}
+
+.path-bar:focus-within {
+    border-color: @accent-color;
+}
+
+.path-bar entry {
+    background-color: @bg-color;
+    color: @text-color;
+    border-radius: 8px;
+    border: 2px solid @accent-color;
+    padding: 6px 12px;
+}
+
+.path-bar entry:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px @accent-bg-color;
+}
+
+.path-bar button {
+    min-width: 0;
+    padding: 6px 12px;
+    border-radius: 8px;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    color: @text-color;
+    transition: all 150ms ease;
+}
+
+.path-bar button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.path-bar button:active {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.path-bar .separator {
+    color: @dim-text-color;
+    font-weight: 600;
+    padding: 0 4px;
+    opacity: 0.5;
+}
+
+/* Tab bar styling */
+.tab-bar {
+    background-color: @surface-color;
+    border-bottom: 1px solid @border-color;
+}
+
+.tab-bar tab {
+    background-color: @bg-color;
+    color: @dim-text-color;
+    border-radius: 8px 8px 0 0;
+    margin: 6px 4px;
+    padding: 8px 16px;
+}
+
+.tab-bar tab:checked {
+    background-color: @accent-bg-color;
+    color: @accent-text-color;
+    border-bottom: 2px solid @accent-color;
+}
+
+/* Status bar */
+.status-bar {
+    padding: 8px 16px;
+    font-size: 0.85em;
+    color: @dim-text-color;
+    background-color: @surface-color;
+    border-top: 1px solid @border-color;
+}
+
+/* Video preview overlay */
+.video-preview-overlay {
+    background-color: @card-color;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    border: 1px solid @border-color;
+}
+
+/* Dual pane separator */
+.dual-pane-separator {
+    background-color: @accent-color;
+    min-width: 2px;
+}
+
+/* Empty folder message */
+.empty-folder {
+    color: @dim-text-color;
+}
+
+.empty-folder image {
+    opacity: 0.4;
+    margin-bottom: 16px;
+}
+
+/* Context menu */
+.context-menu {
+    background-color: @card-color;
+    border: 1px solid @border-color;
+    border-radius: 12px;
+    padding: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.context-menu modelbutton {
+    padding: 10px 14px;
+    border-radius: 8px;
+    color: @text-color;
+}
+
+.context-menu modelbutton:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.context-menu modelbutton arrow.left {
+    -gtk-icon-source: -gtk-icontheme("pan-start-symbolic");
+    color: @dim-text-color;
+}
+
+/* Quick preview panel */
+.quick-preview {
+    background-color: @surface-color;
+    border-left: 2px solid @accent-color;
+    padding: 16px;
+}
+
+/* Dim label helper */
+.dim-label {
+    color: @dim-text-color;
+}
+
+.size-label {
+    font-variant-numeric: tabular-nums;
+    font-family: monospace;
+    font-size: 0.9em;
+}
+
+/* Caption helper class */
+.caption {
+    font-size: 0.85em;
+    color: @dim-text-color;
+}
+
+/* Button improvements */
+button {
+    border-radius: 8px;
+    padding: 8px 16px;
+    transition: all 150ms ease;
+}
+
+button.suggested-action {
+    background-color: @accent-color;
+    color: #000000;
+}
+
+button.suggested-action:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 0 0 4px @accent-bg-color;
+}
+
+button.destructive-action {
+    background-color: @error-color;
+}
+
+button.destructive-action:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 0 0 4px @error-bg-color;
+}
+
+/* Toast notifications */
+toast {
+    background-color: @card-color;
+    color: @text-color;
+    border-radius: 8px;
+    border: 1px solid @border-color;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    padding: 12px 20px;
+}
+
+toast button {
+    background-color: @accent-color;
+    color: #000000;
+    border-radius: 6px;
+    padding: 6px 12px;
+}
+
+/* Scrolled window */
+scrolledwindow {
+    background-color: @bg-color;
+}
+
+/* Scrollbar styling */
+scrollbar {
+    background-color: transparent;
+}
+
+scrollbar slider {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    min-width: 8px;
+    min-height: 8px;
+}
+
+scrollbar slider:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+scrollbar slider:active {
+    background-color: @accent-color;
+}
+
+/* Rich list styling */
+.rich-list {
+    background-color: @bg-color;
+}
+
+.rich-list row {
+    padding: 12px 16px;
+}
+
+/* Data table styling */
+.data-table {
+    background-color: @bg-color;
+}
+
+.data-table row {
+    padding: 8px 12px;
+}
+
+.data-table header {
+    background-color: @surface-color;
+    font-weight: 600;
+}
+
+/* Navigation sidebar styling */
+.navigation-sidebar {
+    background-color: transparent;
+}
+
+/* Linked buttons box */
+.linked>button {
+    border-radius: 0;
+}
+
+.linked>button:first-child {
+    border-radius: 8px 0 0 8px;
+}
+
+.linked>button:last-child {
+    border-radius: 0 8px 8px 0;
+}
+
+.linked>button:only-child {
+    border-radius: 8px;
+}
+
+/* Animation utilities */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.file-list-view row,
+.file-grid-item {
+    animation: fadeIn 200ms ease-out;
+}
+
+/* ── Media Viewer ───────────────────────────────────────────── */
+
+.media-viewer-content {
+    background-color: #0a0a0a;
+}
+
+/* Header toolbar */
+.media-viewer-content .toolbar {
+    background-color: rgba(15, 15, 15, 0.92);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 4px 12px;
+    min-height: 42px;
+}
+
+.media-viewer-content .toolbar button {
+    min-width: 36px;
+    min-height: 36px;
+    border-radius: 8px;
+    margin: 0 2px;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.media-viewer-content .toolbar button:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.media-viewer-content .toolbar .title {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 13px;
+    font-weight: 500;
+    margin: 0 12px;
+}
+
+/* Navigation bar */
+.media-viewer-content actionbar {
+    background: rgba(15, 15, 15, 0.92);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 2px 16px;
+    min-height: 38px;
+}
+
+.media-viewer-content actionbar button {
+    min-width: 36px;
+    min-height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0 4px;
+}
+
+.media-viewer-content actionbar button:hover {
+    background: rgba(255, 255, 255, 0.16);
+}
+
+.media-viewer-content actionbar button:disabled {
+    opacity: 0.3;
+}
+
+.media-viewer-content actionbar label {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Video widget */
+.media-viewer-content video {
+    background-color: #000000;
+}
+
+/* Audio view */
+.audio-icon {
+    opacity: 0.5;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.media-viewer-content .title-2 {
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 600;
+}
+
+/* Error / unsupported page */
+.media-viewer-content statuspage {
+    background-color: #0a0a0a;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* High contrast: apply .high-contrast class to window instead of @media */
+.high-contrast .file-list-view row:selected,
+.high-contrast .file-grid-item:selected {
+    outline: 2px solid @accent-color;
+    outline-offset: -2px;
+}

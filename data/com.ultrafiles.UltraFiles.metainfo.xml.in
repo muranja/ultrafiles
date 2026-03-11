@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>com.ultrafiles.UltraFiles</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  <name>UltraFiles</name>
+  <summary>Modern file manager for Linux</summary>
+  <description>
+    <p>
+      UltraFiles is a powerful, lightweight file manager for Linux with
+      integrated media viewers, video preview on hover, dual-pane support,
+      tabs, and modern features.
+    </p>
+    <p>Features:</p>
+    <ul>
+      <li>Video preview on hover</li>
+      <li>Integrated image viewer with slideshow</li>
+      <li>PDF viewer</li>
+      <li>Dual pane mode</li>
+      <li>Tabs support</li>
+      <li>Advanced sorting options</li>
+      <li>Context menu with copy path, move to, and more</li>
+    </ul>
+  </description>
+  <launchable type="desktop-id">com.ultrafiles.UltraFiles.desktop</launchable>
+  <url type="homepage">https://github.com/ultrafiles/ultrafiles</url>
+  <url type="bugtracker">https://github.com/ultrafiles/ultrafiles/issues</url>
+  <developer_name>UltraFiles Team</developer_name>
+  <content_rating type="oars-1.1" />
+  <releases>
+    <release version="0.1.0" date="2024-01-01">
+      <description>
+        <p>Initial release with core file management features.</p>
+      </description>
+    </release>
+  </releases>
+  <recommends>
+    <control>keyboard</control>
+    <control>pointing</control>
+  </recommends>
+  <requires>
+    <display_length compare="ge">360</display_length>
+  </requires>
+</component>
