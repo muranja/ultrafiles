@@ -27,10 +27,12 @@ class TagsService(GObject.Object):
         self._config_file = os.path.join(self._config_dir, "tags.json")
         
         self._available_tags = [
-            {"name": "Important", "color": "#e01b24"}, # Red
-            {"name": "Work", "color": "#3584e4"},      # Blue
-            {"name": "Personal", "color": "#2ec27e"},  # Green
-            {"name": "To Do", "color": "#e66100"},     # Orange
+            {"name": "Funny", "color": "#f6d32d"},        # Yellow
+            {"name": "Sad", "color": "#62a0ea"},          # Blue
+            {"name": "Reaction", "color": "#57e389"},     # Green
+            {"name": "Sound Effect", "color": "#ff7800"}, # Orange
+            {"name": "Green Screen", "color": "#26a269"}, # Emerald
+            {"name": "B-Roll", "color": "#9141ac"},       # Purple
         ]
         self._file_tags = {}
         self._load()
@@ -96,3 +98,17 @@ class TagsService(GObject.Object):
             self.remove_tag(uri, tag_name)
         else:
             self.add_tag(uri, tag_name)
+
+    def search_by_theme(self, query: str) -> List[str]:
+        """Find file URIs with a theme matching the query (case-insensitive)"""
+        query = (query or "").strip().lower()
+        if not query:
+            return []
+
+        matches = []
+        for uri, tags in self._file_tags.items():
+            for tag in tags:
+                if query in tag.lower():
+                    matches.append(uri)
+                    break
+        return matches

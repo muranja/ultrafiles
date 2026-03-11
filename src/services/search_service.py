@@ -6,8 +6,11 @@ Adheres to strict async rails (Gio.Subprocess).
 """
 
 import gi
-from typing import List, Callable, Optional
+from typing import Set
 import shutil
+
+from .tags_service import TagsService
+from .meme_metadata_service import MemeMetadataService
 
 gi.require_version("Gio", "2.0")
 from gi.repository import Gio, GLib, GObject
@@ -25,10 +28,13 @@ class SearchService(GObject.Object):
         'search-complete': (GObject.SignalFlags.RUN_FIRST, None, (bool, str)),
     }
 
-    def __init__(self):
+    def __init__(self, tags_service: TagsService = None, meme_metadata_service: MemeMetadataService = None):
         super().__init__()
         self._cancellable = None
         self._rg_path = shutil.which("rg")
+        self._tags_service = tags_service or TagsService()
+        self._meme_metadata_service = meme_metadata_service or MemeMetadataService()
+        self._emitted_uris: Set[str] = set()
 
     def search(self, directory: Gio.File, query: str):
         """
@@ -37,11 +43,44 @@ class SearchService(GObject.Object):
         if self._cancellable:
             self._cancellable.cancel()
         self._cancellable = Gio.Cancellable()
+        self._emitted_uris.clear()
+
+        self._emit_metadata_results(query)
 
         if self._rg_path:
             self._search_ripgrep(directory, query)
         else:
             self._search_fallback(directory, query)
+            self.emit('search-complete', True, "")
+
+    def _emit_metadata_results(self, query: str):
+        if not query or not query.strip():
+            return
+        uris = set()
+        try:
+            uris.update(self._meme_metadata_service.search_captions(query))
+        except Exception as e:
+            print(f"Error searching captions: {e}")
+        try:
+            uris.update(self._tags_service.search_by_theme(query))
+        except Exception as e:
+            print(f"Error searching themes: {e}")
+
+        for uri in uris:
+            self._emit_uri(uri)
+
+    def _emit_uri(self, uri_or_path: str):
+        if not uri_or_path:
+            return
+        if "://" in uri_or_path:
+            gfile = Gio.File.new_for_uri(uri_or_path)
+        else:
+            gfile = Gio.File.new_for_path(uri_or_path)
+        key = gfile.get_uri() if hasattr(gfile, "get_uri") else uri_or_path
+        if key in self._emitted_uris:
+            return
+        self._emitted_uris.add(key)
+        self.emit('search-result', gfile)
 
     def _search_ripgrep(self, directory: Gio.File, query: str):
         """Execute search using ripgrep via Gio.Subprocess"""
@@ -67,8 +106,7 @@ class SearchService(GObject.Object):
                         lines = lines_bytes.get_data().decode("utf-8").splitlines()
                         for line in lines:
                             if line.strip():
-                                f = Gio.File.new_for_path(line)
-                                self.emit('search-result', f)
+                                self._emit_uri(line)
                         # Read more? Assuming small output for now or streamed?
                         # read_bytes read everything? No, usually chunked.
                         # For robustness, we should read loops.
@@ -115,8 +153,7 @@ class SearchService(GObject.Object):
                         # Usually rg outputs relative to cwd. 
                         # But we passed absolute path to rg?
                         # Need to verify.
-                        f = Gio.File.new_for_path(line)
-                        self.emit('search-result', f)
+                        self._emit_uri(line)
                 
                 self._read_stream(stream)
             else:
